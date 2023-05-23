@@ -3,7 +3,6 @@ import React, { memo, useState, useEffect } from "react";
 import { Modal, Presets, MonthPicker, Title, Preset, YearPicker, YearTitle, Months, Month } from "./Selector.styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft, faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
-
 const Selector = ({
   presets,
   onChange,
@@ -14,7 +13,6 @@ const Selector = ({
   const [selected, setSelected] = useState([]);
   useEffect(() => {
     let ys = [];
-
     for (let year = 2010; year <= Number(moment().format("YYYY")); year++) {
       const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(month => {
         let date = moment(year + "-" + month + "-01 00:00:00").toDate();
@@ -28,7 +26,6 @@ const Selector = ({
         months
       });
     }
-
     setYears(ys);
     setYearIndex(ys.length - 1);
   }, []);
@@ -37,12 +34,10 @@ const Selector = ({
       onChange(selected);
     }
   }, [selected]);
-
   const setSelectedLocal = (monthIndex, month) => {
     let ys = [...years];
     ys[yearIndex].months[monthIndex].selected = true;
     setYears(ys);
-
     if (!selected.length) {
       setSelected([month.date]);
     } else {
@@ -53,20 +48,16 @@ const Selector = ({
       }
     }
   };
-
   const pickPreset = ({
     start,
     end
   }) => {
     setSelected([start, end]);
   };
-
   const year = years[yearIndex];
-
   if (!year) {
     return null;
   }
-
   return /*#__PURE__*/React.createElement(Modal, null, presets && presets.length && /*#__PURE__*/React.createElement(Presets, null, /*#__PURE__*/React.createElement(Title, null, "PRESETS"), presets.map((p, i) => /*#__PURE__*/React.createElement(Preset, {
     onClick: e => pickPreset(p),
     key: i
@@ -98,5 +89,4 @@ const Selector = ({
     }, m.selected, " ", moment(m.date).format("MMM"));
   }))));
 };
-
 export default /*#__PURE__*/memo(Selector);
